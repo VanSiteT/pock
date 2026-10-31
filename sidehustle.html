@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Side Hustle Idea Generator – pock</title>
+  <meta name="description" content="Generator ide side hustle berbasis AI. Isi skill dan waktu luang, dapatkan ide yang cocok untuk pemula.">
+  <style>
+    :root {
+      --bg: #f4f6f8; --card: #fff; --text: #1a1a1a; --muted: #5c6b7a;
+      --primary: #0f766e; --border: #e5e7eb;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); }
+    header { background: linear-gradient(135deg, #0f766e, #115e59); color: white; padding: 1.8rem 1.5rem; text-align: center; }
+    header h1 { font-size: 1.7rem; font-weight: 700; }
+    header p { opacity: 0.9; margin-top: 0.3rem; font-size: 0.95rem; }
+    nav { background: #134e4a; padding: 0.85rem; text-align: center; position: sticky; top: 0; z-index: 10; }
+    nav a { color: #ccfbf1; margin: 0 0.5rem; text-decoration: none; font-size: 0.82rem; font-weight: 500; }
+    nav a:hover { color: white; }
+    main { max-width: 640px; margin: 0 auto; padding: 1.8rem 1.2rem 3rem; }
+    .card { background: var(--card); padding: 1.6rem; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 1.2rem; }
+    h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 0.8rem; }
+    .desc { color: var(--muted); margin-bottom: 1.2rem; font-size: 0.95rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.95rem; }
+    select, input {
+      width: 100%; padding: 0.75rem 0.9rem; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 1rem; margin-bottom: 1rem; background: #fff;
+    }
+    select:focus, input:focus { outline: 2px solid #99f6e4; border-color: var(--primary); }
+    button {
+      width: 100%; padding: 0.9rem; background: var(--primary); color: white;
+      border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;
+    }
+    button:hover { background: #0d9488; }
+    .idea {
+      background: #f0fdfa; border: 1px solid #ccfbf1; border-radius: 10px;
+      padding: 1rem 1.1rem; margin-bottom: 0.8rem;
+    }
+    .idea h3 { font-size: 1.02rem; margin-bottom: 0.35rem; color: var(--text); }
+    .idea p { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.3rem; }
+    .tag { display: inline-block; background: #ecfdf5; color: #0f766e; font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 20px; margin-right: 0.3rem; font-weight: 500; }
+    #result { display: none; }
+    .hint { font-size: 0.88rem; color: var(--muted); margin-top: 0.8rem; }
+    footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>pock</h1>
+    <p>Side Hustle Idea Generator</p>
+  </header>
+  <nav>
+    <a href="index.html">Beranda</a>
+    <a href="artikel.html">Artikel</a>
+    <a href="prompt.html">Prompt</a>
+    <a href="tools.html">Tools</a>
+    <a href="budget.html">Budget</a>
+    <a href="generator.html">Generator</a>
+    <a href="sidehustle.html">Side Hustle</a>
+    <a href="tentang.html">Tentang</a>
+  </nav>
+
+  <main>
+    <div class="card">
+      <h2>Cari Ide Side Hustle</h2>
+      <p class="desc">Pilih skill dan waktu luangmu, lalu dapatkan ide side hustle yang realistis untuk pemula.</p>
+
+      <label for="skill">Skill / minat utama</label>
+      <select id="skill">
+        <option value="menulis">Menulis / Content</option>
+        <option value="desain">Desain / Visual</option>
+        <option value="video">Video / Editing</option>
+        <option value="bicara">Bicara / Komunikasi</option>
+        <option value="angka">Angka / Analisis</option>
+        <option value="umum">Belum punya skill khusus</option>
+      </select>
+
+      <label for="waktu">Waktu luang per minggu</label>
+      <select id="waktu">
+        <option value="sedikit">Sedikit (3–5 jam)</option>
+        <option value="sedang">Sedang (6–12 jam)</option>
+        <option value="banyak">Banyak (12+ jam)</option>
+      </select>
+
+      <button onclick="generate()">Tampilkan Ide</button>
+    </div>
+
+    <div class="card" id="result">
+      <h2>Ide untuk Kamu</h2>
+      <div id="daftar"></div>
+      <p class="hint">Pilih 1 ide, coba 14 hari, lalu evaluasi. Jangan kerjakan semua sekaligus.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 pock – AI untuk Cuan & Keuangan</p>
+  </footer>
+
+  <script>
+    const ide = {
+      menulis: [
+        { judul: "Jasa Tulis Konten Dibantu AI", usaha: "Rendah", modal: "Nol", desc: "Buat artikel, caption, atau deskripsi produk. AI bantu draft, kamu rapikan." },
+        { judul: "Jual Prompt Pack", usaha: "Sangat Rendah", modal: "Nol", desc: "Kumpulan prompt siap pakai untuk niche tertentu, jual sekali buat berkali-kali." },
+        { judul: "AI Cleanup (Rapikan Tulisan AI)", usaha: "Rendah", modal: "Nol", desc: "Banyak orang pakai AI tapi hasilnya kaku. Kamu tawarkan jasa merapikan." }
+      ],
+      desain: [
+        { judul: "Desain Cepat pakai Canva AI", usaha: "Rendah", modal: "Nol", desc: "Buat thumbnail, feed Instagram, atau materi UMKM dengan bantuan AI Canva." },
+        { judul: "Template Desain Siap Pakai", usaha: "Sedang", modal: "Nol", desc: "Buat template, jual berulang di marketplace." },
+        { judul: "Jasa Branding Sederhana UMKM", usaha: "Sedang", modal: "Nol", desc: "Logo sederhana + paket sosmed untuk bisnis kecil." }
+      ],
+      video: [
+        { judul: "Konten Faceless (TikTok/Reels)", usaha: "Sedang", modal: "Rendah", desc: "Script AI + voice over + CapCut. Tidak perlu tampil wajah." },
+        { judul: "Jasa Edit Video Pendek", usaha: "Sedang", modal: "Nol", desc: "Edit Reels/Shorts untuk kreator atau UMKM." },
+        { judul: "Video Promosi Sederhana", usaha: "Sedang", modal: "Nol", desc: "Buat video produk singkat untuk toko online." }
+      ],
+      bicara: [
+        { judul: "Jasa Setup Chatbot / Prompt", usaha: "Sedang", modal: "Nol", desc: "Bantu bisnis kecil buat prompt atau alur chatbot sederhana." },
+        { judul: "Voice Over pakai AI Voice", usaha: "Rendah", modal: "Rendah", desc: "Gabungkan skill komunikasi dengan tools AI voice." },
+        { judul: "Konsultasi Singkat via Chat", usaha: "Rendah", modal: "Nol", desc: "Tawarkan sesi tanya-jawab singkat di bidang yang kamu kuasai." }
+      ],
+      angka: [
+        { judul: "Jasa Analisis Data Sederhana", usaha: "Sedang", modal: "Nol", desc: "Bantu UMKM baca data penjualan atau pengeluaran dengan bantuan AI." },
+        { judul: "Template Spreadsheet + AI", usaha: "Rendah", modal: "Nol", desc: "Buat template keuangan, jual atau tawarkan jasa setup." },
+        { judul: "Review / Perbandingan Tools", usaha: "Rendah", modal: "Nol", desc: "Buat konten perbandingan tools AI/keuangan, moneti lewat affiliate." }
+      ],
+      umum: [
+        { judul: "Jasa Tulis Konten Dibantu AI", usaha: "Rendah", modal: "Nol", desc: "Paling mudah dimulai. AI bantu tulis, kamu edit." },
+        { judul: "Konten Faceless", usaha: "Sedang", modal: "Rendah", desc: "Tidak perlu skill berat. Cukup konsisten buat video pendek." },
+        { judul: "Jual Prompt Siap Pakai", usaha: "Sangat Rendah", modal: "Nol", desc: "Buat sekali, jual berkali-kali. Cocok untuk pemula." }
+      ]
+    };
+
+    function generate() {
+      const skill = document.getElementById("skill").value;
+      const waktu = document.getElementById("waktu").value;
+      const list = ide[skill];
+
+      let html = "";
+      list.forEach(function(item, i) {
+        // Filter ringan berdasarkan waktu
+        if (waktu === "sedikit" && item.usaha === "Sedang" && i > 0) return;
+        html += '<div class="idea">';
+        html += '<h3>' + (i+1) + '. ' + item.judul + '</h3>';
+        html += '<p>' + item.desc + '</p>';
+        html += '<span class="tag">Usaha: ' + item.usaha + '</span>';
+        html += '<span class="tag">Modal: ' + item.modal + '</span>';
+        html += '</div>';
+      });
+
+      document.getElementById("daftar").innerHTML = html;
+      document.getElementById("result").style.display = "block";
+      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  </script>
+</body>
+</html>
