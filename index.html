@@ -29,36 +29,117 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* LOADER */
+    /* ========== LOADER: PUZZLE + LINEAR P ========== */
     #loader {
       position: fixed; inset: 0; background: #09090b;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       z-index: 9999; transition: opacity 0.7s ease, visibility 0.7s ease;
     }
     #loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
-    .loader-logo { width: 56px; height: 56px; animation: float 2s ease-in-out infinite; }
+
+    .puzzle {
+      position: relative;
+      width: 72px;
+      height: 72px;
+    }
+
+    /* 4 puzzle pieces that fly in and lock */
+    .piece {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border: 2px solid var(--accent);
+      background: rgba(45, 212, 191, 0.06);
+      opacity: 0;
+    }
+    .piece.tl {
+      top: 0; left: 0;
+      border-radius: 10px 4px 4px 4px;
+      animation: pieceIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    }
+    .piece.tr {
+      top: 0; right: 0;
+      border-radius: 4px 10px 4px 4px;
+      animation: pieceIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+    }
+    .piece.bl {
+      bottom: 0; left: 0;
+      border-radius: 4px 4px 4px 10px;
+      animation: pieceIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.65s forwards;
+    }
+    .piece.br {
+      bottom: 0; right: 0;
+      border-radius: 4px 4px 10px 4px;
+      animation: pieceIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+    }
+
+    @keyframes pieceIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.5) translate(var(--ox), var(--oy));
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translate(0, 0);
+      }
+    }
+    .piece.tl { --ox: -18px; --oy: -18px; }
+    .piece.tr { --ox: 18px; --oy: -18px; }
+    .piece.bl { --ox: -18px; --oy: 18px; }
+    .piece.br { --ox: 18px; --oy: 18px; }
+
+    /* Linear P drawn with stroke */
+    .p-draw {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      animation: showP 0.3s ease 1.5s forwards;
+    }
+    .p-draw svg {
+      width: 36px;
+      height: 36px;
+    }
+    .p-draw path {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 80;
+      stroke-dashoffset: 80;
+      animation: drawP 1.2s ease 1.6s forwards;
+    }
+    @keyframes showP { to { opacity: 1; } }
+    @keyframes drawP { to { stroke-dashoffset: 0; } }
+
     .loader-name {
-      margin-top: 1.3rem; font-size: 1.35rem; font-weight: 600;
-      letter-spacing: 0.4em; text-transform: lowercase; color: var(--text);
-      opacity: 0; animation: fadeIn 0.8s ease 0.35s forwards;
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      font-weight: 500;
+      letter-spacing: 0.45em;
+      text-transform: lowercase;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeIn 0.6s ease 2.6s forwards;
     }
     .loader-line {
-      width: 48px; height: 1.5px; background: var(--surface2);
-      margin-top: 1.6rem; border-radius: 2px; overflow: hidden;
+      width: 40px; height: 1.5px; background: var(--surface2);
+      margin-top: 1.4rem; border-radius: 2px; overflow: hidden;
+      opacity: 0;
+      animation: fadeIn 0.4s ease 2.8s forwards;
     }
     .loader-line i {
       display: block; height: 100%; width: 0;
       background: var(--accent);
-      animation: fill 4.5s ease-in-out forwards;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
+      animation: fillBar 1.8s ease 2.9s forwards;
     }
     @keyframes fadeIn { to { opacity: 1; } }
-    @keyframes fill { to { width: 100%; } }
+    @keyframes fillBar { to { width: 100%; } }
 
-    /* HEADER */
+    /* HEADER logo (static linear P) */
     header {
       max-width: 960px; margin: 0 auto; padding: 1.2rem 1.5rem;
       display: flex; align-items: center; justify-content: space-between;
@@ -68,7 +149,17 @@
       display: flex; align-items: center; gap: 0.65rem;
       text-decoration: none; color: var(--text);
     }
-    .brand svg { width: 28px; height: 28px; }
+    .brand-mark {
+      width: 30px; height: 30px;
+      border: 1.5px solid var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brand-mark svg { width: 16px; height: 16px; }
+    .brand-mark path {
+      fill: none; stroke: var(--accent); stroke-width: 2.4;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
     .brand b { font-weight: 600; font-size: 1.05rem; letter-spacing: 0.08em; }
     nav a {
       color: var(--muted); text-decoration: none; font-size: 0.88rem;
@@ -76,7 +167,6 @@
     }
     nav a:hover { color: var(--accent2); }
 
-    /* MAIN */
     main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem 4rem; }
 
     .hero {
@@ -152,7 +242,10 @@
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 0.9rem;
     }
-    .tool-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .tool-icon svg {
+      width: 18px; height: 18px; stroke: var(--accent); fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
     .tool h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
     .tool p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
 
@@ -182,23 +275,31 @@
 </head>
 <body>
 
-  <!-- LOADER -->
+  <!-- LOADER: puzzle assemble + linear P draw -->
   <div id="loader">
-    <!-- Logo minimal: rounded square + simple P mark -->
-    <svg class="loader-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="48" height="48" rx="12" fill="#111113"/>
-      <path d="M16 34V14h10.5c5.5 0 9.5 3.6 9.5 9s-4 9-9.5 9H22v-5.5h4.5c2.2 0 4-1.6 4-3.5s-1.8-3.5-4-3.5H22V34H16z" fill="#2dd4bf"/>
-    </svg>
+    <div class="puzzle">
+      <div class="piece tl"></div>
+      <div class="piece tr"></div>
+      <div class="piece bl"></div>
+      <div class="piece br"></div>
+      <div class="p-draw">
+        <!-- Linear stroke letter P -->
+        <svg viewBox="0 0 32 40" fill="none">
+          <path d="M6 36V4h12c6 0 10 4 10 10s-4 10-10 10H12"/>
+        </svg>
+      </div>
+    </div>
     <div class="loader-name">pock</div>
     <div class="loader-line"><i></i></div>
   </div>
 
   <header>
     <a href="index.html" class="brand">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="48" height="48" rx="12" fill="#111113"/>
-        <path d="M16 34V14h10.5c5.5 0 9.5 3.6 9.5 9s-4 9-9.5 9H22v-5.5h4.5c2.2 0 4-1.6 4-3.5s-1.8-3.5-4-3.5H22V34H16z" fill="#2dd4bf"/>
-      </svg>
+      <div class="brand-mark">
+        <svg viewBox="0 0 32 40" fill="none">
+          <path d="M6 36V4h12c6 0 10 4 10 10s-4 10-10 10H12"/>
+        </svg>
+      </div>
       <b>pock</b>
     </a>
     <nav>
@@ -275,7 +376,7 @@
     window.addEventListener('load', function () {
       setTimeout(function () {
         document.getElementById('loader').classList.add('hide');
-      }, 4800);
+      }, 5200);
     });
   </script>
 </body>
