@@ -5,19 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tentang – pock</title>
   <style>
+    :root {
+      --bg: #f4f6f8; --card: #fff; --text: #1a1a1a; --muted: #5c6b7a;
+      --primary: #0f766e; --border: #e5e7eb;
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: system-ui, sans-serif; line-height: 1.6; color: #222; background: #f8f9fa; }
-    header { background: #111; color: white; padding: 1.5rem; text-align: center; }
-    nav { background: #222; padding: 0.8rem; text-align: center; }
-    nav a { color: #ddd; margin: 0 1rem; text-decoration: none; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.65; color: var(--text); background: var(--bg); }
+    header { background: linear-gradient(135deg, #0f766e, #115e59); color: white; padding: 2rem 1.5rem; text-align: center; }
+    header h1 { font-size: 1.8rem; font-weight: 700; }
+    header p { opacity: 0.9; margin-top: 0.3rem; }
+    nav { background: #134e4a; padding: 0.9rem; text-align: center; position: sticky; top: 0; }
+    nav a { color: #ccfbf1; margin: 0 0.9rem; text-decoration: none; font-weight: 500; }
     nav a:hover { color: white; }
-    main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-    .card { background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; }
-    footer { text-align: center; padding: 2rem; color: #666; }
+    main { max-width: 820px; margin: 0 auto; padding: 2rem 1.2rem 3rem; }
+    .card { background: var(--card); padding: 2rem; border-radius: 12px; border: 1px solid var(--border); }
+    .card h2 { color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; }
+    .card p { color: var(--muted); margin-bottom: 0.9rem; }
+    footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
   </style>
 </head>
 <body>
-  <header><h1>pock</h1><p>Tentang</p></header>
+  <header>
+    <h1>pock</h1>
+    <p>Tentang</p>
+  </header>
   <nav>
     <a href="index.html">Beranda</a>
     <a href="artikel.html">Artikel</a>
@@ -29,7 +40,8 @@
     <div class="card">
       <h2>Tentang pock</h2>
       <p>pock adalah website yang fokus membantu orang memakai AI secara praktis untuk menghasilkan uang (side hustle) dan mengatur keuangan pribadi.</p>
-      <p style="margin-top:1rem">Konten dibuat sederhana, langsung bisa dicoba, dan relevan untuk pemula di Indonesia.</p>
+      <p>Konten dibuat sederhana, langsung bisa dicoba, dan relevan untuk pemula di Indonesia.</p>
+      <p>Tujuan utamanya sederhana: supaya lebih banyak orang bisa memanfaatkan AI tanpa merasa ribet atau takut teknologi.</p>
     </div>
   </main>
   <footer><p>&copy; 2026 pock</p></footer>
