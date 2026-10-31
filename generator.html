@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Generator – pock</title>
+  <meta name="description" content="Generator prompt AI siap pakai untuk atur keuangan, hemat uang, dan side hustle. Pilih tujuan, langsung dapat prompt.">
+  <style>
+    :root {
+      --bg: #f4f6f8; --card: #fff; --text: #1a1a1a; --muted: #5c6b7a;
+      --primary: #0f766e; --border: #e5e7eb;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); }
+    header { background: linear-gradient(135deg, #0f766e, #115e59); color: white; padding: 1.8rem 1.5rem; text-align: center; }
+    header h1 { font-size: 1.7rem; font-weight: 700; }
+    header p { opacity: 0.9; margin-top: 0.3rem; font-size: 0.95rem; }
+    nav { background: #134e4a; padding: 0.85rem; text-align: center; position: sticky; top: 0; z-index: 10; }
+    nav a { color: #ccfbf1; margin: 0 0.6rem; text-decoration: none; font-size: 0.86rem; font-weight: 500; }
+    nav a:hover { color: white; }
+    main { max-width: 640px; margin: 0 auto; padding: 1.8rem 1.2rem 3rem; }
+    .card { background: var(--card); padding: 1.6rem; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 1.2rem; }
+    h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 0.8rem; }
+    .desc { color: var(--muted); margin-bottom: 1.2rem; font-size: 0.95rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.95rem; }
+    select, input {
+      width: 100%; padding: 0.75rem 0.9rem; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 1rem; margin-bottom: 1rem; background: #fff;
+    }
+    select:focus, input:focus { outline: 2px solid #99f6e4; border-color: var(--primary); }
+    button {
+      width: 100%; padding: 0.9rem; background: var(--primary); color: white;
+      border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;
+    }
+    button:hover { background: #0d9488; }
+    .btn-secondary {
+      background: #fff; color: var(--primary); border: 1.5px solid var(--primary);
+      margin-top: 0.7rem;
+    }
+    .btn-secondary:hover { background: #f0fdfa; }
+    #output {
+      background: #f0fdfa; border: 1px solid #ccfbf1; border-radius: 8px;
+      padding: 1rem; font-size: 0.92rem; white-space: pre-wrap; line-height: 1.55;
+      min-height: 120px; margin-top: 0.5rem;
+    }
+    #result { display: none; }
+    .hint { font-size: 0.88rem; color: var(--muted); margin-top: 0.8rem; }
+    footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>pock</h1>
+    <p>Prompt Generator</p>
+  </header>
+  <nav>
+    <a href="index.html">Beranda</a>
+    <a href="artikel.html">Artikel</a>
+    <a href="prompt.html">Prompt</a>
+    <a href="tools.html">Tools</a>
+    <a href="budget.html">Budget</a>
+    <a href="generator.html">Generator</a>
+    <a href="tentang.html">Tentang</a>
+  </nav>
+
+  <main>
+    <div class="card">
+      <h2>Buat Prompt Otomatis</h2>
+      <p class="desc">Pilih tujuan, isi sedikit data, lalu dapatkan prompt siap tempel ke ChatGPT / Gemini.</p>
+
+      <label for="tujuan">Apa yang ingin kamu lakukan?</label>
+      <select id="tujuan" onchange="toggleGaji()">
+        <option value="anggaran">Buat anggaran bulanan</option>
+        <option value="boros">Analisis pengeluaran boros</option>
+        <option value="hemat">Tantangan hemat 7 hari</option>
+        <option value="nabung">Sistem nabung otomatis</option>
+        <option value="pelit">AI yang pelit (kontrol belanja)</option>
+        <option value="sidehustle">Ide side hustle sesuai skill</option>
+        <option value="jasa">Buat penawaran jasa freelance</option>
+      </select>
+
+      <div id="gajiBox">
+        <label for="gaji">Gaji per bulan (opsional)</label>
+        <input type="number" id="gaji" placeholder="Contoh: 5000000">
+      </div>
+
+      <div id="skillBox" style="display:none;">
+        <label for="skill">Skill / keahlian kamu</label>
+        <input type="text" id="skill" placeholder="Contoh: menulis, desain, editing video">
+      </div>
+
+      <div id="jasaBox" style="display:none;">
+        <label for="jasa">Jasa yang ingin ditawarkan</label>
+        <input type="text" id="jasa" placeholder="Contoh: jasa tulis artikel dibantu AI">
+      </div>
+
+      <button onclick="generate()">Buat Prompt</button>
+    </div>
+
+    <div class="card" id="result">
+      <h2>Prompt Siap Pakai</h2>
+      <div id="output"></div>
+      <button class="btn-secondary" onclick="salin()">Salin Prompt</button>
+      <p class="hint">Salin lalu tempel di ChatGPT, Gemini, atau Claude.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 pock – AI untuk Cuan & Keuangan</p>
+  </footer>
+
+  <script>
+    function toggleGaji() {
+      const t = document.getElementById("tujuan").value;
+      document.getElementById("gajiBox").style.display = (t === "anggaran" || t === "boros") ? "block" : "none";
+      document.getElementById("skillBox").style.display = (t === "sidehustle") ? "block" : "none";
+      document.getElementById("jasaBox").style.display = (t === "jasa") ? "block" : "none";
+    }
+
+    function generate() {
+      const t = document.getElementById("tujuan").value;
+      const gaji = document.getElementById("gaji").value || "[isi gaji]";
+      const skill = document.getElementById("skill").value || "[sebutkan skill kamu]";
+      const jasa = document.getElementById("jasa").value || "[sebutkan jasa]";
+
+      const prompts = {
+        anggaran: `Kamu adalah asisten keuangan pribadi saya.\nGaji saya Rp ${gaji} per bulan.\nBantu saya buat anggaran bulanan yang realistis.\n\nAturan:\n- Sisihkan minimal 20% untuk tabungan\n- Alokasikan untuk kebutuhan pokok, transport, makan, dan hiburan\n- Buat versi yang ketat dan versi yang longgar\n- Tampilkan dalam bentuk tabel yang mudah dibaca`,
+
+        boros: `Analisis pola pengeluaran saya berdasarkan data berikut: [tempel daftar pengeluaran].\nGaji saya sekitar Rp ${gaji}.\nTunjukkan 3 pos pengeluaran yang paling boros dan berikan alternatif yang lebih hemat.\nBuat jawaban yang jujur dan sedikit “kejam”.`,
+
+        hemat: `Buatkan tantangan hemat uang selama 7 hari.\nSetiap hari harus ada aturan spesifik yang bisa saya lakukan.\nBuat tantangan yang realistis tapi terasa menantang.`,
+
+        nabung: `Bantu saya buat sistem nabung otomatis tanpa harus ingat-ingat.\nBerikan metode praktis yang bisa saya terapkan mulai hari ini.\nSertakan contoh perhitungan.`,
+
+        pelit: `Mulai sekarang kamu berperan sebagai asisten keuangan yang sangat pelit.\nSetiap kali saya ingin belanja sesuatu, kamu wajib menanyakan 3 pertanyaan ketat sebelum mengizinkan.\nJangan mudah mengalah.`,
+
+        sidehustle: `Saya punya skill: ${skill}.\nWaktu luang saya sekitar 5–10 jam per minggu.\nBerikan 5 ide side hustle yang bisa dikerjakan dengan bantuan AI dan cocok untuk pemula.\nPrioritaskan yang minim modal.`,
+
+        jasa: `Bantu saya buat deskripsi jasa yang menarik untuk ditawarkan di platform freelance.\nJasa yang saya tawarkan: ${jasa}.\nBuat versi singkat (untuk bio) dan versi lengkap (untuk deskripsi jasa).`
+      };
+
+      document.getElementById("output").textContent = prompts[t];
+      document.getElementById("result").style.display = "block";
+      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function salin() {
+      const teks = document.getElementById("output").textContent;
+      if (!teks) return;
+      navigator.clipboard.writeText(teks).then(function() {
+        alert("Prompt berhasil disalin");
+      }).catch(function() {
+        alert("Gagal menyalin. Silakan salin manual.");
+      });
+    }
+  </script>
+</body>
+</html>
