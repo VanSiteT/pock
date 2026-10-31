@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Budget Assistant – pock</title>
-  <meta name="description" content="Tools gratis untuk membuat anggaran bulanan otomatis berdasarkan gaji kamu.">
+  <meta name="description" content="Tools gratis untuk membuat anggaran bulanan otomatis berdasarkan gaji kamu. Pilih Normal, Ketat, atau Survival.">
   <style>
     :root {
       --bg: #f4f6f8; --card: #fff; --text: #1a1a1a; --muted: #5c6b7a;
@@ -16,21 +16,36 @@
     header h1 { font-size: 1.7rem; font-weight: 700; }
     header p { opacity: 0.9; margin-top: 0.3rem; font-size: 0.95rem; }
     nav { background: #134e4a; padding: 0.85rem; text-align: center; position: sticky; top: 0; z-index: 10; }
-    nav a { color: #ccfbf1; margin: 0 0.7rem; text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+    nav a { color: #ccfbf1; margin: 0 0.65rem; text-decoration: none; font-size: 0.88rem; font-weight: 500; }
     nav a:hover { color: white; }
     main { max-width: 640px; margin: 0 auto; padding: 1.8rem 1.2rem 3rem; }
     .card { background: var(--card); padding: 1.6rem; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 1.2rem; }
-    h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 1rem; }
+    h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 0.8rem; }
+    .desc { color: var(--muted); margin-bottom: 1.2rem; font-size: 0.95rem; }
     label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.95rem; }
-    input, select { width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; margin-bottom: 1rem; }
-    button { width: 100%; padding: 0.85rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    input, select {
+      width: 100%; padding: 0.75rem 0.9rem; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 1rem; margin-bottom: 1rem; background: #fff;
+    }
+    input:focus, select:focus { outline: 2px solid #99f6e4; border-color: var(--primary); }
+    button {
+      width: 100%; padding: 0.9rem; background: var(--primary); color: white;
+      border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;
+    }
     button:hover { background: #0d9488; }
-    table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.95rem; }
+    .btn-secondary {
+      background: #fff; color: var(--primary); border: 1.5px solid var(--primary);
+      margin-top: 0.7rem;
+    }
+    .btn-secondary:hover { background: #f0fdfa; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.95rem; }
     th, td { border: 1px solid var(--border); padding: 0.65rem 0.8rem; text-align: left; }
     th { background: #f0fdfa; color: var(--primary); }
     .total { font-weight: 700; background: #ecfdf5; }
-    .hint { font-size: 0.9rem; color: var(--muted); margin-top: 1rem; }
+    .hint { font-size: 0.92rem; color: var(--muted); margin-top: 1rem; line-height: 1.5; }
     #result { display: none; }
+    .related { font-size: 0.9rem; margin-top: 1.2rem; }
+    .related a { color: var(--primary); }
     footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
   </style>
 </head>
@@ -51,16 +66,16 @@
   <main>
     <div class="card">
       <h2>Buat Anggaran Otomatis</h2>
-      <p style="color:var(--muted); margin-bottom:1.2rem; font-size:0.95rem;">Masukkan gaji bulananmu, pilih gaya anggaran, lalu dapatkan pembagian otomatis.</p>
+      <p class="desc">Masukkan gaji bulanan, pilih gaya anggaran, lalu dapatkan pembagian otomatis.</p>
 
       <label for="gaji">Gaji per bulan (Rp)</label>
-      <input type="number" id="gaji" placeholder="Contoh: 5000000" min="0">
+      <input type="number" id="gaji" placeholder="Contoh: 5000000" min="100000" step="100000">
 
       <label for="gaya">Gaya Anggaran</label>
       <select id="gaya">
-        <option value="normal">Normal (seimbang)</option>
-        <option value="ketat">Ketat (lebih banyak nabung)</option>
-        <option value="survival">Survival (hemat maksimal)</option>
+        <option value="normal">Normal — seimbang</option>
+        <option value="ketat">Ketat — lebih banyak nabung</option>
+        <option value="survival">Survival — hemat maksimal</option>
       </select>
 
       <button onclick="hitung()">Buat Anggaran</button>
@@ -75,6 +90,8 @@
         <tbody id="tabel"></tbody>
       </table>
       <p class="hint" id="saran"></p>
+      <button class="btn-secondary" onclick="salin()">Salin Hasil</button>
+      <p class="related">Baca juga: <a href="artikel/gaji-5-juta-ai-yang-atur.html">Gaji 5 Juta, Biar AI yang Atur</a></p>
     </div>
   </main>
 
@@ -98,6 +115,14 @@
       darurat: "Dana Darurat"
     };
 
+    const saranText = {
+      normal: "Anggaran seimbang. Cocok untuk pemula yang ingin mulai menabung tanpa terlalu ketat.",
+      ketat: "Lebih banyak untuk tabungan. Kurangi hiburan dan jajan supaya target nabung tercapai.",
+      survival: "Mode hemat maksimal. Fokus bertahan dan menabung sebanyak mungkin."
+    };
+
+    let hasilTeks = "";
+
     function format(n) {
       return "Rp " + Math.round(n).toLocaleString("id-ID");
     }
@@ -106,32 +131,46 @@
       const gaji = Number(document.getElementById("gaji").value);
       const gaya = document.getElementById("gaya").value;
 
-      if (!gaji || gaji <= 0) {
-        alert("Masukkan jumlah gaji yang valid");
+      if (!gaji || gaji < 100000) {
+        alert("Masukkan gaji minimal Rp 100.000");
         return;
       }
 
       const rule = aturan[gaya];
       let html = "";
       let total = 0;
+      hasilTeks = "Anggaran Gaji " + format(gaji) + " (" + gaya + ")\n\n";
 
       for (const key in rule) {
         const jumlah = gaji * rule[key];
         total += jumlah;
-        html += `<tr><td>${label[key]}</td><td>${format(jumlah)}</td><td>${Math.round(rule[key]*100)}%</td></tr>`;
+        const persen = Math.round(rule[key] * 100);
+        html += "<tr><td>" + label[key] + "</td><td>" + format(jumlah) + "</td><td>" + persen + "%</td></tr>";
+        hasilTeks += label[key] + ": " + format(jumlah) + " (" + persen + "%)\n";
       }
 
-      html += `<tr class="total"><td>Total</td><td>${format(total)}</td><td>100%</td></tr>`;
-      document.getElementById("tabel").innerHTML = html;
+      html += "<tr class=\"total\"><td>Total</td><td>" + format(total) + "</td><td>100%</td></tr>";
+      hasilTeks += "\nTotal: " + format(total) + "\n\n" + saranText[gaya];
 
-      const saranText = {
-        normal: "Anggaran seimbang. Cocok untuk pemula yang ingin mulai menabung tanpa terlalu ketat.",
-        ketat: "Lebih banyak untuk tabungan. Kurangi hiburan dan jajan.",
-        survival: "Mode hemat maksimal. Fokus bertahan dan menabung sebanyak mungkin."
-      };
+      document.getElementById("tabel").innerHTML = html;
       document.getElementById("saran").textContent = saranText[gaya];
       document.getElementById("result").style.display = "block";
+      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start" });
     }
+
+    function salin() {
+      if (!hasilTeks) return;
+      navigator.clipboard.writeText(hasilTeks).then(function() {
+        alert("Hasil anggaran berhasil disalin");
+      }).catch(function() {
+        alert("Gagal menyalin. Silakan salin manual.");
+      });
+    }
+
+    // Enter key support
+    document.getElementById("gaji").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") hitung();
+    });
   </script>
 </body>
 </html>
