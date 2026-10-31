@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Target Tabungan – pock</title>
+  <meta name="description" content="Hitung berapa lama mencapai target tabungan. Masukkan target dan kemampuan nabung per bulan.">
+  <style>
+    :root {
+      --bg: #f4f6f8; --card: #fff; --text: #1a1a1a; --muted: #5c6b7a;
+      --primary: #0f766e; --border: #e5e7eb;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); }
+    header { background: linear-gradient(135deg, #0f766e, #115e59); color: white; padding: 1.8rem 1.5rem; text-align: center; }
+    header h1 { font-size: 1.7rem; font-weight: 700; }
+    header p { opacity: 0.9; margin-top: 0.3rem; font-size: 0.95rem; }
+    nav { background: #134e4a; padding: 0.85rem; text-align: center; position: sticky; top: 0; z-index: 10; }
+    nav a { color: #ccfbf1; margin: 0 0.45rem; text-decoration: none; font-size: 0.8rem; font-weight: 500; }
+    nav a:hover { color: white; }
+    main { max-width: 640px; margin: 0 auto; padding: 1.8rem 1.2rem 3rem; }
+    .card { background: var(--card); padding: 1.6rem; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 1.2rem; }
+    h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 0.8rem; }
+    .desc { color: var(--muted); margin-bottom: 1.2rem; font-size: 0.95rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.95rem; }
+    input {
+      width: 100%; padding: 0.75rem 0.9rem; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 1rem; margin-bottom: 1rem; background: #fff;
+    }
+    input:focus { outline: 2px solid #99f6e4; border-color: var(--primary); }
+    button {
+      width: 100%; padding: 0.9rem; background: var(--primary); color: white;
+      border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;
+    }
+    button:hover { background: #0d9488; }
+    .result-box {
+      background: #f0fdfa; border: 1px solid #ccfbf1; border-radius: 10px;
+      padding: 1.2rem; margin-top: 0.5rem; text-align: center;
+    }
+    .result-box .big { font-size: 1.8rem; font-weight: 700; color: var(--primary); margin: 0.4rem 0; }
+    .result-box .label { font-size: 0.9rem; color: var(--muted); }
+    .detail { margin-top: 1rem; font-size: 0.95rem; color: #333; text-align: left; }
+    .detail p { margin-bottom: 0.4rem; }
+    #result { display: none; }
+    .hint { font-size: 0.88rem; color: var(--muted); margin-top: 1rem; }
+    footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>pock</h1>
+    <p>Kalkulator Target Tabungan</p>
+  </header>
+  <nav>
+    <a href="index.html">Beranda</a>
+    <a href="artikel.html">Artikel</a>
+    <a href="prompt.html">Prompt</a>
+    <a href="tools.html">Tools</a>
+    <a href="budget.html">Budget</a>
+    <a href="generator.html">Generator</a>
+    <a href="sidehustle.html">Side Hustle</a>
+    <a href="tabungan.html">Tabungan</a>
+    <a href="tentang.html">Tentang</a>
+  </nav>
+
+  <main>
+    <div class="card">
+      <h2>Hitung Target Tabungan</h2>
+      <p class="desc">Masukkan target yang ingin dicapai dan berapa yang bisa kamu sisihkan per bulan.</p>
+
+      <label for="target">Target tabungan (Rp)</label>
+      <input type="number" id="target" placeholder="Contoh: 10000000" min="10000">
+
+      <label for="bulanan">Nabung per bulan (Rp)</label>
+      <input type="number" id="bulanan" placeholder="Contoh: 500000" min="10000">
+
+      <label for="awal">Tabungan awal sekarang (Rp) — opsional</label>
+      <input type="number" id="awal" placeholder="Contoh: 0" min="0" value="0">
+
+      <button onclick="hitung()">Hitung</button>
+    </div>
+
+    <div class="card" id="result">
+      <h2>Hasil</h2>
+      <div class="result-box">
+        <div class="label">Kamu akan mencapai target dalam</div>
+        <div class="big" id="durasi">—</div>
+        <div class="label" id="tanggal"></div>
+      </div>
+      <div class="detail" id="detail"></div>
+      <p class="hint">Angka ini belum termasuk bunga. Kalau konsisten, hasilnya bisa lebih cepat.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 pock – AI untuk Cuan & Keuangan</p>
+  </footer>
+
+  <script>
+    function format(n) {
+      return "Rp " + Math.round(n).toLocaleString("id-ID");
+    }
+
+    function hitung() {
+      const target = Number(document.getElementById("target").value);
+      const bulanan = Number(document.getElementById("bulanan").value);
+      const awal = Number(document.getElementById("awal").value) || 0;
+
+      if (!target || target < 10000) {
+        alert("Masukkan target tabungan yang valid");
+        return;
+      }
+      if (!bulanan || bulanan < 10000) {
+        alert("Masukkan jumlah nabung per bulan yang valid");
+        return;
+      }
+
+      const sisa = target - awal;
+      if (sisa <= 0) {
+        document.getElementById("durasi").textContent = "Sudah tercapai!";
+        document.getElementById("tanggal").textContent = "Tabungan awalmu sudah memenuhi target";
+        document.getElementById("detail").innerHTML = "";
+        document.getElementById("result").style.display = "block";
+        return;
+      }
+
+      const bulan = Math.ceil(sisa / bulanan);
+      const tahun = Math.floor(bulan / 12);
+      const sisaBulan = bulan % 12;
+
+      let teksDurasi = "";
+      if (tahun > 0) teksDurasi += tahun + " tahun ";
+      if (sisaBulan > 0) teksDurasi += sisaBulan + " bulan";
+      if (tahun === 0 && sisaBulan === 0) teksDurasi = "Kurang dari 1 bulan";
+
+      // Estimasi tanggal
+      const now = new Date();
+      now.setMonth(now.getMonth() + bulan);
+      const bulanNama = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+      const tglTeks = bulanNama[now.getMonth()] + " " + now.getFullYear();
+
+      document.getElementById("durasi").textContent = teksDurasi.trim();
+      document.getElementById("tanggal").textContent = "Perkiraan tercapai: " + tglTeks;
+
+      let detail = "<p><strong>Target:</strong> " + format(target) + "</p>";
+      detail += "<p><strong>Tabungan awal:</strong> " + format(awal) + "</p>";
+      detail += "<p><strong>Sisa yang perlu dikumpulkan:</strong> " + format(sisa) + "</p>";
+      detail += "<p><strong>Nabung per bulan:</strong> " + format(bulanan) + "</p>";
+      detail += "<p><strong>Total bulan:</strong> " + bulan + " bulan</p>";
+
+      document.getElementById("detail").innerHTML = detail;
+      document.getElementById("result").style.display = "block";
+      document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    document.getElementById("target").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") hitung();
+    });
+    document.getElementById("bulanan").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") hitung();
+    });
+  </script>
+</body>
+</html>
