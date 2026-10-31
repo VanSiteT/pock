@@ -7,134 +7,35 @@
   <meta name="description" content="Belajar memakai AI untuk menghasilkan uang dan mengatur keuangan pribadi. Praktis, langsung bisa dicoba.">
   <style>
     :root {
-      --bg: #f4f6f8;
-      --card: #ffffff;
-      --text: #1a1a1a;
-      --muted: #5c6b7a;
-      --primary: #0f766e;
-      --primary-dark: #0d9488;
-      --border: #e5e7eb;
+      --bg: #f4f6f8; --card: #ffffff; --text: #1a1a1a; --muted: #5c6b7a;
+      --primary: #0f766e; --primary-dark: #0d9488; --border: #e5e7eb;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      line-height: 1.65;
-      color: var(--text);
-      background: var(--bg);
-    }
-    header {
-      background: linear-gradient(135deg, #0f766e, #115e59);
-      color: white;
-      padding: 2.2rem 1.5rem 1.8rem;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 2.1rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-    header p {
-      margin-top: 0.4rem;
-      opacity: 0.9;
-      font-size: 1.05rem;
-    }
-    nav {
-      background: #134e4a;
-      padding: 0.9rem;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    nav a {
-      color: #ccfbf1;
-      margin: 0 0.9rem;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; line-height: 1.65; color: var(--text); background: var(--bg); }
+    header { background: linear-gradient(135deg, #0f766e, #115e59); color: white; padding: 2.2rem 1.5rem 1.8rem; text-align: center; }
+    header h1 { font-size: 2.1rem; font-weight: 700; letter-spacing: -0.5px; }
+    header p { margin-top: 0.4rem; opacity: 0.9; font-size: 1.05rem; }
+    nav { background: #134e4a; padding: 0.9rem; text-align: center; position: sticky; top: 0; z-index: 10; }
+    nav a { color: #ccfbf1; margin: 0 0.7rem; text-decoration: none; font-size: 0.9rem; font-weight: 500; }
     nav a:hover { color: white; }
-    main {
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 2rem 1.2rem 3rem;
-    }
-    .hero {
-      background: var(--card);
-      padding: 2.2rem;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-      margin-bottom: 1.8rem;
-      border: 1px solid var(--border);
-    }
-    .hero h2 {
-      font-size: 1.5rem;
-      margin-bottom: 0.7rem;
-      color: var(--primary);
-    }
+    main { max-width: 820px; margin: 0 auto; padding: 2rem 1.2rem 3rem; }
+    .hero { background: var(--card); padding: 2.2rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); margin-bottom: 1.8rem; border: 1px solid var(--border); }
+    .hero h2 { font-size: 1.5rem; margin-bottom: 0.7rem; color: var(--primary); }
     .hero p { color: var(--muted); font-size: 1.05rem; }
-    .section-title {
-      font-size: 1.15rem;
-      margin-bottom: 1rem;
-      color: var(--text);
-    }
-    .card {
-      background: var(--card);
-      padding: 1.4rem 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 0.9rem;
-      border: 1px solid var(--border);
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .card:hover {
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-      transform: translateY(-2px);
-    }
-    .card a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.05rem;
-    }
+    .section-title { font-size: 1.15rem; margin-bottom: 1rem; color: var(--text); }
+    .card { background: var(--card); padding: 1.4rem 1.5rem; border-radius: 12px; margin-bottom: 0.9rem; border: 1px solid var(--border); transition: box-shadow 0.2s, transform 0.2s; }
+    .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.06); transform: translateY(-2px); }
+    .card a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 1.05rem; }
     .card a:hover { color: var(--primary); }
-    .card .desc {
-      margin-top: 0.35rem;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-    .cta-row {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-      margin-top: 1.2rem;
-    }
-    .btn {
-      display: inline-block;
-      padding: 0.6rem 1.2rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
+    .card .desc { margin-top: 0.35rem; color: var(--muted); font-size: 0.92rem; }
+    .cta-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .btn { display: inline-block; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+    .btn-primary { background: var(--primary); color: white; }
     .btn-primary:hover { background: var(--primary-dark); }
-    .btn-outline {
-      background: transparent;
-      color: var(--primary);
-      border: 1.5px solid var(--primary);
-    }
+    .btn-outline { background: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
     .btn-outline:hover { background: #f0fdfa; }
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--muted);
-      font-size: 0.9rem;
-      border-top: 1px solid var(--border);
-      margin-top: 1rem;
-    }
+    .highlight { border-color: #99f6e4; background: #f0fdfa; }
+    footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: 1rem; }
   </style>
 </head>
 <body>
@@ -148,6 +49,7 @@
     <a href="artikel.html">Artikel</a>
     <a href="prompt.html">Prompt</a>
     <a href="tools.html">Tools</a>
+    <a href="budget.html">Budget</a>
     <a href="tentang.html">Tentang</a>
   </nav>
 
@@ -156,12 +58,19 @@
       <h2>Pakai AI untuk Cuan & Atur Keuangan</h2>
       <p>Belajar cara praktis memanfaatkan AI supaya bisa menghasilkan uang tambahan dan mengatur keuangan dengan lebih baik. Langsung bisa dicoba, tanpa ribet.</p>
       <div class="cta-row">
-        <a href="artikel.html" class="btn btn-primary">Baca Artikel</a>
+        <a href="budget.html" class="btn btn-primary">Coba Budget Assistant</a>
         <a href="prompt.html" class="btn btn-outline">Lihat Prompt Siap Pakai</a>
       </div>
     </section>
 
-    <h3 class="section-title">Artikel Terbaru</h3>
+    <h3 class="section-title">Tools</h3>
+
+    <div class="card highlight">
+      <a href="budget.html">AI Budget Assistant</a>
+      <p class="desc">Masukkan gaji → langsung dapat pembagian anggaran otomatis (Normal / Ketat / Survival).</p>
+    </div>
+
+    <h3 class="section-title" style="margin-top:1.8rem;">Artikel Terbaru</h3>
 
     <div class="card">
       <a href="artikel/gaji-5-juta-ai-yang-atur.html">Gaji 5 Juta, Biar AI yang Atur — Bukan Kamu</a>
@@ -178,7 +87,7 @@
       <p class="desc">5 ide side hustle minim usaha yang cocok untuk pemula.</p>
     </div>
 
-    <h3 class="section-title" style="margin-top:2rem;">Mulai dari Sini</h3>
+    <h3 class="section-title" style="margin-top:1.8rem;">Lainnya</h3>
 
     <div class="card">
       <a href="prompt.html">Prompt Siap Pakai</a>
