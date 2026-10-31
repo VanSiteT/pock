@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Budget Assistant – pock</title>
+  <meta name="description" content="Tools gratis untuk membuat anggaran bulanan otomatis berdasarkan gaji kamu.">
+  <style>
+    :root {
+      --bg: #f4f6f8; --card: #fff; --text: #1a1a1a; --muted: #5c6b7a;
+      --primary: #0f766e; --border: #e5e7eb;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; color: var(--text); background: var(--bg); }
+    header { background: linear-gradient(135deg, #0f766e, #115e59); color: white; padding: 1.8rem 1.5rem; text-align: center; }
+    header h1 { font-size: 1.7rem; font-weight: 700; }
+    header p { opacity: 0.9; margin-top: 0.3rem; font-size: 0.95rem; }
+    nav { background: #134e4a; padding: 0.85rem; text-align: center; position: sticky; top: 0; z-index: 10; }
+    nav a { color: #ccfbf1; margin: 0 0.7rem; text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+    nav a:hover { color: white; }
+    main { max-width: 640px; margin: 0 auto; padding: 1.8rem 1.2rem 3rem; }
+    .card { background: var(--card); padding: 1.6rem; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 1.2rem; }
+    h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 1rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.95rem; }
+    input, select { width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; margin-bottom: 1rem; }
+    button { width: 100%; padding: 0.85rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    button:hover { background: #0d9488; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.95rem; }
+    th, td { border: 1px solid var(--border); padding: 0.65rem 0.8rem; text-align: left; }
+    th { background: #f0fdfa; color: var(--primary); }
+    .total { font-weight: 700; background: #ecfdf5; }
+    .hint { font-size: 0.9rem; color: var(--muted); margin-top: 1rem; }
+    #result { display: none; }
+    footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>pock</h1>
+    <p>AI Budget Assistant</p>
+  </header>
+  <nav>
+    <a href="index.html">Beranda</a>
+    <a href="artikel.html">Artikel</a>
+    <a href="prompt.html">Prompt</a>
+    <a href="tools.html">Tools</a>
+    <a href="budget.html">Budget</a>
+    <a href="tentang.html">Tentang</a>
+  </nav>
+
+  <main>
+    <div class="card">
+      <h2>Buat Anggaran Otomatis</h2>
+      <p style="color:var(--muted); margin-bottom:1.2rem; font-size:0.95rem;">Masukkan gaji bulananmu, pilih gaya anggaran, lalu dapatkan pembagian otomatis.</p>
+
+      <label for="gaji">Gaji per bulan (Rp)</label>
+      <input type="number" id="gaji" placeholder="Contoh: 5000000" min="0">
+
+      <label for="gaya">Gaya Anggaran</label>
+      <select id="gaya">
+        <option value="normal">Normal (seimbang)</option>
+        <option value="ketat">Ketat (lebih banyak nabung)</option>
+        <option value="survival">Survival (hemat maksimal)</option>
+      </select>
+
+      <button onclick="hitung()">Buat Anggaran</button>
+    </div>
+
+    <div class="card" id="result">
+      <h2>Hasil Anggaran</h2>
+      <table>
+        <thead>
+          <tr><th>Kategori</th><th>Jumlah</th><th>Persen</th></tr>
+        </thead>
+        <tbody id="tabel"></tbody>
+      </table>
+      <p class="hint" id="saran"></p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 pock – AI untuk Cuan & Keuangan</p>
+  </footer>
+
+  <script>
+    const aturan = {
+      normal:   { tabungan:0.20, pokok:0.30, makan:0.25, transport:0.10, hiburan:0.10, darurat:0.05 },
+      ketat:    { tabungan:0.30, pokok:0.28, makan:0.20, transport:0.10, hiburan:0.05, darurat:0.07 },
+      survival: { tabungan:0.40, pokok:0.25, makan:0.18, transport:0.08, hiburan:0.02, darurat:0.07 }
+    };
+
+    const label = {
+      tabungan: "Tabungan",
+      pokok: "Kebutuhan Pokok",
+      makan: "Makan & Minum",
+      transport: "Transport",
+      hiburan: "Hiburan",
+      darurat: "Dana Darurat"
+    };
+
+    function format(n) {
+      return "Rp " + Math.round(n).toLocaleString("id-ID");
+    }
+
+    function hitung() {
+      const gaji = Number(document.getElementById("gaji").value);
+      const gaya = document.getElementById("gaya").value;
+
+      if (!gaji || gaji <= 0) {
+        alert("Masukkan jumlah gaji yang valid");
+        return;
+      }
+
+      const rule = aturan[gaya];
+      let html = "";
+      let total = 0;
+
+      for (const key in rule) {
+        const jumlah = gaji * rule[key];
+        total += jumlah;
+        html += `<tr><td>${label[key]}</td><td>${format(jumlah)}</td><td>${Math.round(rule[key]*100)}%</td></tr>`;
+      }
+
+      html += `<tr class="total"><td>Total</td><td>${format(total)}</td><td>100%</td></tr>`;
+      document.getElementById("tabel").innerHTML = html;
+
+      const saranText = {
+        normal: "Anggaran seimbang. Cocok untuk pemula yang ingin mulai menabung tanpa terlalu ketat.",
+        ketat: "Lebih banyak untuk tabungan. Kurangi hiburan dan jajan.",
+        survival: "Mode hemat maksimal. Fokus bertahan dan menabung sebanyak mungkin."
+      };
+      document.getElementById("saran").textContent = saranText[gaya];
+      document.getElementById("result").style.display = "block";
+    }
+  </script>
+</body>
+</html>
