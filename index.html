@@ -15,7 +15,7 @@
       --accent: #2dd4bf;
       --accent2: #5eead4;
       --border: rgba(255,255,255,0.06);
-      --glow: rgba(45, 212, 191, 0.15);
+      --glow: rgba(45, 212, 191, 0.12);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,311 +29,165 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== LOADER ===== */
+    /* LOADER */
     #loader {
-      position: fixed;
-      inset: 0;
-      background: #09090b;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.7s ease, visibility 0.7s ease;
+      position: fixed; inset: 0; background: #09090b;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 9999; transition: opacity 0.7s ease, visibility 0.7s ease;
     }
-    #loader.hide {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-    .loader-logo {
-      width: 80px;
-      height: 80px;
-      animation: logoFloat 2s ease-in-out infinite;
-    }
+    #loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-logo { width: 56px; height: 56px; animation: float 2s ease-in-out infinite; }
     .loader-name {
-      margin-top: 1.4rem;
-      font-size: 1.5rem;
-      font-weight: 600;
-      letter-spacing: 0.35em;
-      text-transform: lowercase;
-      color: var(--text);
-      opacity: 0;
-      animation: fadeIn 0.8s ease 0.4s forwards;
+      margin-top: 1.3rem; font-size: 1.35rem; font-weight: 600;
+      letter-spacing: 0.4em; text-transform: lowercase; color: var(--text);
+      opacity: 0; animation: fadeIn 0.8s ease 0.35s forwards;
     }
     .loader-line {
-      width: 64px;
-      height: 1.5px;
-      background: var(--surface2);
-      margin-top: 1.8rem;
-      border-radius: 2px;
-      overflow: hidden;
+      width: 48px; height: 1.5px; background: var(--surface2);
+      margin-top: 1.6rem; border-radius: 2px; overflow: hidden;
     }
     .loader-line i {
-      display: block;
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      animation: shimmer 4.5s ease-in-out forwards;
+      display: block; height: 100%; width: 0;
+      background: var(--accent);
+      animation: fill 4.5s ease-in-out forwards;
     }
-    @keyframes logoFloat {
+    @keyframes float {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+      50% { transform: translateY(-5px); }
     }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-    @keyframes shimmer {
-      0% { width: 0; margin-left: 0; }
-      50% { width: 100%; margin-left: 0; }
-      100% { width: 100%; margin-left: 0; opacity: 0.4; }
-    }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes fill { to { width: 100%; } }
 
-    /* ===== HEADER ===== */
+    /* HEADER */
     header {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      max-width: 960px; margin: 0 auto; padding: 1.2rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
       border-bottom: 1px solid var(--border);
     }
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      text-decoration: none;
-      color: var(--text);
+      display: flex; align-items: center; gap: 0.65rem;
+      text-decoration: none; color: var(--text);
     }
-    .brand svg { width: 32px; height: 32px; }
-    .brand b {
-      font-weight: 600;
-      font-size: 1.1rem;
-      letter-spacing: 0.06em;
-    }
+    .brand svg { width: 28px; height: 28px; }
+    .brand b { font-weight: 600; font-size: 1.05rem; letter-spacing: 0.08em; }
     nav a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 500;
-      margin-left: 1.6rem;
-      transition: color 0.2s;
+      color: var(--muted); text-decoration: none; font-size: 0.88rem;
+      font-weight: 500; margin-left: 1.5rem; transition: color 0.2s;
     }
     nav a:hover { color: var(--accent2); }
 
-    /* ===== MAIN ===== */
-    main {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 1.5rem 4rem;
-    }
+    /* MAIN */
+    main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem 4rem; }
 
     .hero {
-      text-align: center;
-      padding: 4.5rem 1rem 4rem;
-      position: relative;
+      text-align: center; padding: 4rem 1rem 3.5rem; position: relative;
     }
     .hero::before {
-      content: '';
-      position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 280px;
-      height: 280px;
+      content: ''; position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
+      width: 240px; height: 240px;
       background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
+      pointer-events: none; z-index: 0;
     }
     .hero > * { position: relative; z-index: 1; }
     .hero-badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: rgba(45, 212, 191, 0.1);
-      border: 1px solid rgba(45, 212, 191, 0.2);
-      padding: 0.35rem 0.9rem;
-      border-radius: 999px;
-      margin-bottom: 1.4rem;
+      display: inline-block; font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
+      background: rgba(45, 212, 191, 0.08);
+      border: 1px solid rgba(45, 212, 191, 0.18);
+      padding: 0.3rem 0.85rem; border-radius: 999px; margin-bottom: 1.3rem;
     }
     .hero h1 {
-      font-size: clamp(2rem, 5.5vw, 3rem);
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.04em;
-      margin-bottom: 1rem;
+      font-size: clamp(1.9rem, 5vw, 2.8rem); font-weight: 700;
+      line-height: 1.2; letter-spacing: -0.04em; margin-bottom: 1rem;
     }
     .hero h1 span {
       background: linear-gradient(135deg, var(--accent2), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .hero p {
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 420px;
-      margin: 0 auto 2rem;
-      line-height: 1.7;
+      color: var(--muted); font-size: 1.02rem; max-width: 400px;
+      margin: 0 auto 1.8rem; line-height: 1.7;
     }
-    .cta {
-      display: flex;
-      gap: 0.75rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+    .cta { display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; }
     .btn {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.75rem 1.5rem;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 0.92rem;
-      text-decoration: none;
-      transition: all 0.2s;
+      display: inline-flex; align-items: center; padding: 0.7rem 1.4rem;
+      border-radius: 999px; font-weight: 600; font-size: 0.9rem;
+      text-decoration: none; transition: all 0.2s;
     }
     .btn-main {
-      background: var(--accent);
-      color: #09090b;
-      box-shadow: 0 0 24px rgba(45, 212, 191, 0.25);
+      background: var(--accent); color: #09090b;
+      box-shadow: 0 0 20px rgba(45, 212, 191, 0.2);
     }
-    .btn-main:hover {
-      background: var(--accent2);
-      box-shadow: 0 0 32px rgba(45, 212, 191, 0.35);
-    }
+    .btn-main:hover { background: var(--accent2); }
     .btn-sub {
-      background: var(--surface2);
-      color: var(--text);
+      background: var(--surface2); color: var(--text);
       border: 1px solid var(--border);
     }
-    .btn-sub:hover {
-      border-color: rgba(255,255,255,0.15);
-      background: #1f1f23;
-    }
+    .btn-sub:hover { border-color: rgba(255,255,255,0.12); }
 
     .label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 1.1rem;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;
     }
 
     .tools {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.9rem;
-      margin-bottom: 3rem;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem; margin-bottom: 2.8rem;
     }
-    @media (max-width: 560px) {
-      .tools { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 560px) { .tools { grid-template-columns: 1fr; } }
 
     .tool {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.25s;
-      display: block;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.35rem; text-decoration: none;
+      color: inherit; transition: all 0.25s; display: block;
     }
     .tool:hover {
-      border-color: rgba(45, 212, 191, 0.3);
-      background: var(--surface2);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      border-color: rgba(45, 212, 191, 0.28);
+      background: var(--surface2); transform: translateY(-2px);
     }
     .tool-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(45,212,191,0.15), rgba(45,212,191,0.05));
-      border: 1px solid rgba(45, 212, 191, 0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-      font-size: 1.15rem;
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(45, 212, 191, 0.08);
+      border: 1px solid rgba(45, 212, 191, 0.12);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 0.9rem;
     }
-    .tool h3 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 0.35rem;
-      letter-spacing: -0.01em;
-    }
-    .tool p {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    .tool-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .tool h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .tool p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
 
     .article {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.25rem 1.4rem;
-      margin-bottom: 0.7rem;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.15rem 1.3rem; margin-bottom: 0.65rem;
       transition: border-color 0.2s;
     }
-    .article:hover { border-color: rgba(45, 212, 191, 0.25); }
+    .article:hover { border-color: rgba(45, 212, 191, 0.22); }
     .article a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.98rem;
+      color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.95rem;
     }
     .article a:hover { color: var(--accent2); }
-    .article p {
-      margin-top: 0.3rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
+    .article p { margin-top: 0.25rem; font-size: 0.84rem; color: var(--muted); }
 
     footer {
-      text-align: center;
-      padding: 2.5rem 1rem;
-      color: var(--muted);
-      font-size: 0.8rem;
-      border-top: 1px solid var(--border);
-      letter-spacing: 0.04em;
+      text-align: center; padding: 2.2rem 1rem; color: var(--muted);
+      font-size: 0.8rem; border-top: 1px solid var(--border); letter-spacing: 0.04em;
     }
 
     @media (max-width: 600px) {
-      header { flex-direction: column; gap: 1rem; padding: 1rem; }
-      nav a { margin: 0 0.7rem; }
-      .hero { padding: 3rem 0.5rem 3rem; }
+      header { flex-direction: column; gap: 0.9rem; padding: 1rem; }
+      nav a { margin: 0 0.65rem; }
+      .hero { padding: 2.8rem 0.5rem 2.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- LOADING -->
+  <!-- LOADER -->
   <div id="loader">
-    <svg class="loader-logo" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#5eead4"/>
-          <stop offset="100%" stop-color="#2dd4bf"/>
-        </linearGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="2" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-      <rect width="80" height="80" rx="20" fill="#111113"/>
-      <rect x="1" y="1" width="78" height="78" rx="19" stroke="url(#g)" stroke-width="1.5" opacity="0.5"/>
-      <!-- stylized P -->
-      <path d="M24 54V26h16c7.7 0 14 5.4 14 14s-6.3 14-14 14H36v-8h4c3.3 0 6-2.7 6-6s-2.7-6-6-6H32v22H24z" fill="url(#g)" filter="url(#glow)"/>
-      <!-- coin / pocket accent -->
-      <circle cx="58" cy="54" r="7" fill="url(#g)" opacity="0.9"/>
-      <circle cx="58" cy="54" r="3.5" fill="#09090b"/>
+    <!-- Logo minimal: rounded square + simple P mark -->
+    <svg class="loader-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="12" fill="#111113"/>
+      <path d="M16 34V14h10.5c5.5 0 9.5 3.6 9.5 9s-4 9-9.5 9H22v-5.5h4.5c2.2 0 4-1.6 4-3.5s-1.8-3.5-4-3.5H22V34H16z" fill="#2dd4bf"/>
     </svg>
     <div class="loader-name">pock</div>
     <div class="loader-line"><i></i></div>
@@ -341,18 +195,9 @@
 
   <header>
     <a href="index.html" class="brand">
-      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#5eead4"/>
-            <stop offset="100%" stop-color="#2dd4bf"/>
-          </linearGradient>
-        </defs>
-        <rect width="80" height="80" rx="20" fill="#111113"/>
-        <rect x="1" y="1" width="78" height="78" rx="19" stroke="url(#hg)" stroke-width="1.5" opacity="0.4"/>
-        <path d="M24 54V26h16c7.7 0 14 5.4 14 14s-6.3 14-14 14H36v-8h4c3.3 0 6-2.7 6-6s-2.7-6-6-6H32v22H24z" fill="url(#hg)"/>
-        <circle cx="58" cy="54" r="7" fill="url(#hg)" opacity="0.9"/>
-        <circle cx="58" cy="54" r="3.5" fill="#09090b"/>
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="48" height="48" rx="12" fill="#111113"/>
+        <path d="M16 34V14h10.5c5.5 0 9.5 3.6 9.5 9s-4 9-9.5 9H22v-5.5h4.5c2.2 0 4-1.6 4-3.5s-1.8-3.5-4-3.5H22V34H16z" fill="#2dd4bf"/>
       </svg>
       <b>pock</b>
     </a>
@@ -378,22 +223,30 @@
     <p class="label">Tools</p>
     <div class="tools">
       <a href="budget.html" class="tool">
-        <div class="tool-icon">📊</div>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
         <h3>Budget Assistant</h3>
         <p>Pembagian anggaran otomatis dari gaji kamu.</p>
       </a>
       <a href="generator.html" class="tool">
-        <div class="tool-icon">✨</div>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
         <h3>Prompt Generator</h3>
         <p>Prompt siap tempel ke ChatGPT atau Gemini.</p>
       </a>
       <a href="sidehustle.html" class="tool">
-        <div class="tool-icon">🚀</div>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24"><path d="M5 19L12 5l7 14"/><path d="M8.5 13h7"/></svg>
+        </div>
         <h3>Side Hustle Ideas</h3>
         <p>Ide cuan sesuai skill dan waktu luang.</p>
       </a>
       <a href="tabungan.html" class="tool">
-        <div class="tool-icon">🎯</div>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </div>
         <h3>Target Tabungan</h3>
         <p>Hitung berapa lama mencapai targetmu.</p>
       </a>
