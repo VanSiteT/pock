@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tools AI – pock</title>
-  <meta name="description" content="Rekomendasi tools AI gratis dan berbayar untuk atur keuangan, side hustle, dan produktivitas.">
+  <title>Tools – pock</title>
+  <meta name="description" content="Kumpulan tools interaktif dan rekomendasi AI untuk cuan serta keuangan pribadi.">
   <style>
     :root {
       --bg: #f4f6f8; --card: #fff; --text: #1a1a1a; --muted: #5c6b7a;
@@ -15,26 +15,26 @@
     header { background: linear-gradient(135deg, #0f766e, #115e59); color: white; padding: 2rem 1.5rem; text-align: center; }
     header h1 { font-size: 1.8rem; font-weight: 700; }
     header p { opacity: 0.9; margin-top: 0.3rem; }
-    nav { background: #134e4a; padding: 0.9rem; text-align: center; position: sticky; top: 0; }
-    nav a { color: #ccfbf1; margin: 0 0.9rem; text-decoration: none; font-weight: 500; }
+    nav { background: #134e4a; padding: 0.9rem; text-align: center; position: sticky; top: 0; z-index: 10; }
+    nav a { color: #ccfbf1; margin: 0 0.9rem; text-decoration: none; font-size: 0.95rem; font-weight: 500; }
     nav a:hover { color: white; }
     main { max-width: 820px; margin: 0 auto; padding: 2rem 1.2rem 3rem; }
-    h2 { margin: 2rem 0 1rem; font-size: 1.2rem; color: var(--primary); }
-    .card { background: var(--card); padding: 1.3rem 1.4rem; border-radius: 12px; margin-bottom: 0.9rem; border: 1px solid var(--border); }
-    .card h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
-    .card p { color: var(--muted); font-size: 0.94rem; margin-bottom: 0.6rem; }
-    .tag { display: inline-block; background: #ecfdf5; color: #0f766e; font-size: 0.78rem; padding: 0.2rem 0.6rem; border-radius: 20px; margin-right: 0.35rem; margin-bottom: 0.4rem; font-weight: 500; }
-    .btn { display: inline-block; margin-top: 0.4rem; padding: 0.45rem 1rem; background: var(--primary); color: white; text-decoration: none; border-radius: 7px; font-size: 0.9rem; font-weight: 600; }
-    .btn:hover { background: #0d9488; }
-    .note { background: #ecfdf5; padding: 1rem 1.2rem; border-radius: 10px; margin-bottom: 1.5rem; font-size: 0.95rem; border: 1px solid #a7f3d0; }
-    .affiliate-note { font-size: 0.8rem; color: #888; margin-top: 1.8rem; }
+    h2 { font-size: 1.2rem; color: var(--primary); margin: 1.8rem 0 1rem; }
+    h2:first-child { margin-top: 0; }
+    .card { background: var(--card); padding: 1.4rem 1.5rem; border-radius: 12px; margin-bottom: 0.9rem; border: 1px solid var(--border); transition: 0.2s; }
+    .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.06); transform: translateY(-2px); }
+    .card a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 1.05rem; }
+    .card a:hover { color: var(--primary); }
+    .card p { margin-top: 0.35rem; color: var(--muted); font-size: 0.92rem; }
+    .tag { display: inline-block; background: #ecfdf5; color: #0f766e; font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 20px; margin-top: 0.5rem; font-weight: 500; }
+    .highlight { border-color: #99f6e4; background: #f0fdfa; }
     footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
   </style>
 </head>
 <body>
   <header>
     <h1>pock</h1>
-    <p>Tools AI</p>
+    <p>Tools</p>
   </header>
   <nav>
     <a href="index.html">Beranda</a>
@@ -45,83 +45,53 @@
   </nav>
 
   <main>
-    <div class="note">
-      Tools di bawah dipilih karena praktis dan relevan untuk cuan + atur keuangan. Beberapa link mungkin merupakan affiliate link.
+    <h2>Tools Interaktif pock</h2>
+
+    <div class="card highlight">
+      <a href="budget.html">AI Budget Assistant</a>
+      <p>Masukkan gaji → dapat pembagian anggaran otomatis (Normal / Ketat / Survival).</p>
+      <span class="tag">Gratis</span>
     </div>
 
-    <h2>Chat AI Utama</h2>
-
-    <div class="card">
-      <h3>ChatGPT</h3>
-      <p>AI paling serbaguna. Cocok untuk buat anggaran, ide side hustle, tulis konten, dan banyak lagi.</p>
-      <span class="tag">Gratis + Berbayar</span>
-      <span class="tag">Paling Populer</span><br>
-      <a class="btn" href="https://chat.openai.com" target="_blank" rel="noopener">Coba ChatGPT</a>
+    <div class="card highlight">
+      <a href="generator.html">Prompt Generator</a>
+      <p>Pilih tujuan → dapat prompt siap tempel ke ChatGPT / Gemini.</p>
+      <span class="tag">Gratis</span>
     </div>
 
-    <div class="card">
-      <h3>Google Gemini</h3>
-      <p>Alternatif kuat dari Google. Bagus untuk analisis dan tugas yang butuh data terbaru.</p>
-      <span class="tag">Gratis + Berbayar</span><br>
-      <a class="btn" href="https://gemini.google.com" target="_blank" rel="noopener">Coba Gemini</a>
+    <div class="card highlight">
+      <a href="sidehustle.html">Side Hustle Idea Generator</a>
+      <p>Pilih skill & waktu luang → dapat ide side hustle yang cocok.</p>
+      <span class="tag">Gratis</span>
     </div>
 
-    <div class="card">
-      <h3>Claude</h3>
-      <p>AI yang bagus untuk tulisan panjang dan penalaran. Cocok untuk buat artikel atau rencana keuangan detail.</p>
-      <span class="tag">Gratis + Berbayar</span><br>
-      <a class="btn" href="https://claude.ai" target="_blank" rel="noopener">Coba Claude</a>
+    <div class="card highlight">
+      <a href="tabungan.html">Kalkulator Target Tabungan</a>
+      <p>Hitung berapa lama mencapai target tabunganmu.</p>
+      <span class="tag">Gratis</span>
     </div>
 
-    <h2>Tools untuk Konten & Side Hustle</h2>
+    <h2>Rekomendasi Tools Eksternal</h2>
 
     <div class="card">
-      <h3>Canva</h3>
-      <p>Desain grafis + AI. Bisa buat thumbnail, konten sosmed, dan materi jual jasa dengan cepat.</p>
-      <span class="tag">Gratis + Pro</span><br>
-      <a class="btn" href="https://www.canva.com" target="_blank" rel="noopener">Coba Canva</a>
+      <a href="https://chat.openai.com" target="_blank" rel="noopener">ChatGPT</a>
+      <p>AI serbaguna untuk anggaran, ide, dan konten.</p>
     </div>
 
     <div class="card">
-      <h3>CapCut</h3>
-      <p>Edit video dengan bantuan AI. Cocok untuk konten faceless di TikTok / Reels / Shorts.</p>
-      <span class="tag">Gratis</span><br>
-      <a class="btn" href="https://www.capcut.com" target="_blank" rel="noopener">Coba CapCut</a>
+      <a href="https://gemini.google.com" target="_blank" rel="noopener">Google Gemini</a>
+      <p>Alternatif kuat, bagus untuk analisis.</p>
     </div>
 
     <div class="card">
-      <h3>Notion</h3>
-      <p>Catat ide, buat database klien, dan pakai AI untuk merapikan catatan kerja sampingan.</p>
-      <span class="tag">Gratis + Berbayar</span><br>
-      <a class="btn" href="https://www.notion.so" target="_blank" rel="noopener">Coba Notion</a>
-    </div>
-
-    <h2>Tools untuk Keuangan</h2>
-
-    <div class="card">
-      <h3>Google Sheets</h3>
-      <p>Tools paling fleksibel untuk catat pengeluaran. Bisa digabung dengan prompt AI untuk analisis.</p>
-      <span class="tag">Gratis</span><br>
-      <a class="btn" href="https://sheets.google.com" target="_blank" rel="noopener">Buka Google Sheets</a>
-    </div>
-
-    <h2>Tools Pendukung</h2>
-
-    <div class="card">
-      <h3>LanguageTool</h3>
-      <p>Merapikan tulisan. Berguna kalau jual jasa menulis atau membuat konten.</p>
-      <span class="tag">Gratis + Berbayar</span><br>
-      <a class="btn" href="https://languagetool.org" target="_blank" rel="noopener">Coba LanguageTool</a>
+      <a href="https://www.canva.com" target="_blank" rel="noopener">Canva</a>
+      <p>Desain + AI untuk konten dan materi jasa.</p>
     </div>
 
     <div class="card">
-      <h3>Photopea</h3>
-      <p>Edit gambar online mirip Photoshop. Berguna untuk keperluan konten.</p>
-      <span class="tag">Gratis</span><br>
-      <a class="btn" href="https://www.photopea.com" target="_blank" rel="noopener">Buka Photopea</a>
+      <a href="https://www.capcut.com" target="_blank" rel="noopener">CapCut</a>
+      <p>Edit video dengan bantuan AI.</p>
     </div>
-
-    <p class="affiliate-note">Beberapa tautan di halaman ini dapat merupakan tautan afiliasi. Kami hanya merekomendasikan tools yang kami anggap berguna.</p>
   </main>
 
   <footer>
