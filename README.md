@@ -1,2 +1,5 @@
 # pock
-Website pock - AI untuk Cuan &amp; Keuangan Pribadi
+
+Website praktis tentang memakai AI untuk cuan dan mengatur keuangan pribadi.
+
+**Live:** https://vansitet.github.io/pock/
